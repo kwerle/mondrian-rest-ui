@@ -1,4 +1,4 @@
-import { fromPairs, omit, compact, reduce } from 'lodash';
+import { fromPairs, omit, compact, reduce, property } from 'lodash';
 
 import { ActionCreators } from 'redux-undo';
 
@@ -98,10 +98,6 @@ export default function reducer(state = initialState, action={}) {
     }
 }
 
-function memberKey(member) {
-    return `[${member.level.hierarchy.dimension.name}].[${member.level.name}].&[${member.key}]`;
-}
-
 function clientCall(dispatch, getState) {
     const state = getState(),
           dds = compact(state.aggregation.present.drillDowns);
@@ -126,10 +122,7 @@ function clientCall(dispatch, getState) {
 
     // add cuts
     query = reduce(state.aggregation.present.cuts,
-                   (q, cut) => {
-                       const cutExpr = (cut.cutMembers.length === 1) ? memberKey(cut.cutMembers[0]) : `{${cut.cutMembers.map(memberKey).join(',')}}`;
-                       return q.cut(cutExpr);
-                   },
+                   (q, cut) => q.cut(cutExpression(cut)),
                    query);
 
     // add options
@@ -221,4 +214,8 @@ export function clearMeasures() {
     return {
         type: MEASURE_CLEAR_ALL
     };
+}
+
+export function cutExpression(cut) {
+    return (cut.cutMembers.length === 1) ? cut.cutMembers[0].fullName : `{${cut.cutMembers.map(property('fullName')).join(',')}}`;
 }

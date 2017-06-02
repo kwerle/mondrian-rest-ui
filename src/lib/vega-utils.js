@@ -1,6 +1,5 @@
 import { reduce, toPairs, fromPairs, isNull, property, zipObject } from 'lodash';
 
-
 const VEGA_LITE_TEMPLATE = {
     "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
     config: {

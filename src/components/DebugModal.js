@@ -23,10 +23,6 @@ function DebugModal(props) {
                         <ControlLabel>Generated MDX</ControlLabel>
                         <FormControl componentClass="textarea" value={data ? data.mdx : ''} readOnly style={{fontFamily: 'monospace', fontSize: '12px'}}/>
                     </FormGroup>
-                    <FormGroup>
-                        <ControlLabel>Vega Lite JSON</ControlLabel>
-                        <FormControl componentClass="textarea" value={{}} readOnly style={{fontFamily: 'monospace', fontSize: '12px'}}/>
-                    </FormGroup>
                 </form>
             </Modal.Body>
 

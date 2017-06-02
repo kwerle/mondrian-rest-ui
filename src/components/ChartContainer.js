@@ -205,29 +205,28 @@ class Chart extends PureComponent {
   updateChart() {
 
     if (this.props.aggregation.data === null) {
-
         return;
     }
 
-        let vls = specToVegaLite(this.props.spec);
-        vls = {
-            ...vls,
-            mark: this.props.spec.mark,
-            data: {
-                values: transformForVega(this.props.aggregation.data.tidy())
-            }
-        };
+    let vls = specToVegaLite(this.props.spec);
+    vls = {
+        ...vls,
+        mark: this.props.spec.mark,
+        data: {
+            values: transformForVega(this.props.aggregation.data.tidy())
+        }
+    };
 
-        vegaEmbed(
-            this._vegaContainer,
-            vls,
-            {
-                mode: 'vega-lite'
-            },
-            (error, result) => {
-                vlTooltip(result.view, vls, {});
-            }
-        );
+    vegaEmbed(
+        this._vegaContainer,
+        vls,
+        {
+            mode: 'vega-lite'
+        },
+        (error, result) => {
+            vlTooltip(result.view, vls, {});
+        }
+    );
     }
 
     shouldComponentUpdate(nextProps, nextState) {
